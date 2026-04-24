@@ -4,6 +4,12 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import WebSocket from "ws";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(readFileSync(join(__dirname, "package.json"), "utf-8"));
 
 const args = process.argv.slice(2);
 let port = 12080;
@@ -156,10 +162,24 @@ connectWs();
 
 // --- MCP Server ---
 const server = new McpServer({
-  name: "proxypin",
-  version: "1.0.0",
+  name: pkg.name,
+  version: pkg.version,
   description: "ProxyPin traffic capture MCP server. Connects to ProxyPin's WebSocket push service and buffers HTTP/HTTPS/WebSocket traffic in real-time. Use list_requests to browse captured traffic, get_request to inspect full request/response details (headers, body, timing), search_requests to filter by URL/method/status, and get_stats for an overview. Typical workflow: get_stats → list_requests → get_request(id) for deep inspection.",
 });
+
+server.tool(
+  "version",
+  "Get the current version of proxypin-mcp server, including package name, version number, and WebSocket connection status.",
+  {},
+  async () => {
+    return {
+      content: [{
+        type: "text",
+        text: JSON.stringify({ name: pkg.name, version: pkg.version, ws_connected: wsConnected, ws_url: WS_URL }),
+      }],
+    };
+  }
+);
 
 server.tool(
   "list_requests",
