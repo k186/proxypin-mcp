@@ -1,0 +1,52 @@
+{
+  "name": "@k186/proxypin-mcp",
+  "version": "1.0.1",
+  "description": "MCP server for ProxyPin — real-time HTTP(S) traffic capture analysis via WebSocket",
+  "type": "module",
+  "bin": {
+    "proxypin-mcp": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "proxypin",
+    "proxy",
+    "traffic",
+    "capture",
+    "sniffing",
+    "har",
+    "http",
+    "https",
+    "websocket",
+    "network",
+    "debugging",
+    "claude",
+    "ai"
+  ],
+  "author": "xiong.yi <k1868548@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/k186/proxypin-mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/k186/proxypin-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/k186/proxypin-mcp/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "ws": "^8.18.0",
+    "zod": "^4.3.6"
+  }
+}
