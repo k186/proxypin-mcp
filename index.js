@@ -118,6 +118,16 @@ function handleMessage(msg) {
 }
 
 // --- WebSocket connection with auto-reconnect ---
+let reconnectTimer = null;
+
+function scheduleReconnect() {
+  if (reconnectTimer) return;
+  reconnectTimer = setTimeout(() => {
+    reconnectTimer = null;
+    connectWs();
+  }, 5000);
+}
+
 function connectWs() {
   try {
     const ws = new WebSocket(WS_URL);
@@ -128,17 +138,17 @@ function connectWs() {
     ws.on("close", () => {
       wsConnected = false;
       activeWs = null;
-      setTimeout(connectWs, 5000);
+      scheduleReconnect();
     });
     ws.on("error", () => {
       wsConnected = false;
       activeWs = null;
-      setTimeout(connectWs, 5000);
+      scheduleReconnect();
     });
   } catch {
     wsConnected = false;
     activeWs = null;
-    setTimeout(connectWs, 5000);
+    scheduleReconnect();
   }
 }
 
