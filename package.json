@@ -1,6 +1,6 @@
 {
   "name": "@k186/proxypin-mcp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCP server for ProxyPin — real-time HTTP(S) traffic capture analysis via WebSocket",
   "type": "module",
   "bin": {
